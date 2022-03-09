@@ -23,12 +23,12 @@ public class PriceCatalogueExample {
     private void findLocalDiscountedPrice(final Currency localCurrency, final String productName) {
         long time = System.currentTimeMillis();
 
-        Product product = catalogue.productByName(productName)
+        final Product product = catalogue.productByName(productName)
                 .orElseThrow(() -> new RuntimeException("Product not available!"));
+        final Price price = priceFinder.findBestPrice(product);
 
-        Price price = priceFinder.findBestPrice(product);
-        System.out.println(price.getTotal());
         double exchangeRate = exchangeService.lookupExchangeRate(CURRENCY, localCurrency);
+
         double localPrice = exchange(price, exchangeRate);
 
         System.out.printf("A %s will cost us %f %s %n", productName, localPrice, localCurrency);
