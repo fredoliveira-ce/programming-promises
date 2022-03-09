@@ -1,4 +1,4 @@
-package promises.privefinder;
+package promises.pricefinder;
 
 import domain.Catalogue;
 import domain.ExchangeService;
