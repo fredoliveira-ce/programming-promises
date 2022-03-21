@@ -1,23 +1,21 @@
 package promises.pricefinder;
 
 import domain.Catalogue;
+import domain.Currency;
 import domain.ExchangeService;
 import domain.Price;
 import domain.PriceFinder;
 import domain.Product;
 import promises.utils.Utils;
 
-import java.util.Currency;
-
 public class PriceCatalogueThread {
 
-    private static final Currency CURRENCY = Currency.getInstance("BRL");
     private final Catalogue catalogue = new Catalogue();
     private final PriceFinder priceFinder = new PriceFinder(catalogue);
     private final ExchangeService exchangeService = new ExchangeService();
 
     public static void main(final String[] args) throws InterruptedException {
-        new PriceCatalogueThread().findLocalDiscountedPrice(Currency.getInstance("EUR"), "Galaxy S21");
+        new PriceCatalogueThread().findLocalDiscountedPrice(Currency.EUR, "Galaxy S21");
     }
 
     private void findLocalDiscountedPrice(final Currency localCurrency, final String productName) throws InterruptedException {
@@ -77,7 +75,7 @@ public class PriceCatalogueThread {
 
         @Override
         public void run() {
-            this.exchangeRate = exchangeService.lookupExchangeRate(CURRENCY, localCurrency);
+            this.exchangeRate = exchangeService.lookupExchangeRate(localCurrency);
         }
 
         public double getExchangeRate() {

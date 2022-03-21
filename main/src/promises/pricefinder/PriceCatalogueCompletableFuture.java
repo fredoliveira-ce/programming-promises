@@ -1,24 +1,23 @@
 package promises.pricefinder;
 
 import domain.Catalogue;
+import domain.Currency;
 import domain.ExchangeService;
 import domain.Price;
 import domain.PriceFinder;
 import domain.Product;
 import promises.utils.Utils;
 
-import java.util.Currency;
 import java.util.concurrent.CompletableFuture;
 
 public class PriceCatalogueCompletableFuture {
 
-    private static final Currency CURRENCY = Currency.getInstance("BRL");
     private final Catalogue catalogue = new Catalogue();
     private final PriceFinder priceFinder = new PriceFinder(catalogue);
     private final ExchangeService exchangeService = new ExchangeService();
 
     public static void main(final String[] args) {
-        new PriceCatalogueCompletableFuture().findLocalDiscountedPrice(Currency.getInstance("EUR"), "Galaxy S21");
+        new PriceCatalogueCompletableFuture().findLocalDiscountedPrice(Currency.EUR, "Galaxy S21");
     }
 
     private void findLocalDiscountedPrice(final Currency localCurrency, final String productName) {
@@ -29,7 +28,7 @@ public class PriceCatalogueCompletableFuture {
 
         CompletableFuture<Price> priceCF = CompletableFuture.supplyAsync(() -> priceFinder.findBestPrice(productCF.join()));
 
-        CompletableFuture<Double> exchangeCF = CompletableFuture.supplyAsync(() -> exchangeService.lookupExchangeRate(CURRENCY, localCurrency));
+        CompletableFuture<Double> exchangeCF = CompletableFuture.supplyAsync(() -> exchangeService.lookupExchangeRate(localCurrency));
 
         double localPrice = exchange(priceCF.join(), exchangeCF.join());
 

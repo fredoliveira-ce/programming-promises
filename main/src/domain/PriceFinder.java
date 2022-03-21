@@ -12,14 +12,14 @@ public class PriceFinder {
     public PriceFinder(final Catalogue catalogue) {
         this.catalogue = catalogue;
         this.offers = List.of(
-                new Offer(getProduct(1), new Store(Store.Partner.AMAZON), new Price(100, 0)),
-                new Offer(getProduct(2),  new Store(Store.Partner.AMAZON), new Price(600, 0.03)),
-                new Offer(getProduct(2),  new Store(Store.Partner.BOL), new Price(630, 0.02)),
-                new Offer(getProduct(2),  new Store(Store.Partner.EBAY), new Price(700, 0.05)),
-                new Offer(getProduct(3),  new Store(Store.Partner.AMAZON), new Price(100, 0)),
-                new Offer(getProduct(4),  new Store(Store.Partner.AMAZON), new Price(100, 0)),
-                new Offer(getProduct(5),  new Store(Store.Partner.AMAZON), new Price(100, 0)),
-                new Offer(getProduct(6),  new Store(Store.Partner.AMAZON), new Price(100, 0))
+                new Offer(getProduct(1), new Store(Store.Partner.AMAZON), new Price(100, 0, Currency.EUR)),
+                new Offer(getProduct(2),  new Store(Store.Partner.AMAZON), new Price(600, 0.03, Currency.EUR)),
+                new Offer(getProduct(2),  new Store(Store.Partner.BOL), new Price(630, 0.02, Currency.EUR)),
+                new Offer(getProduct(2),  new Store(Store.Partner.EBAY), new Price(700, 0.05, Currency.EUR)),
+                new Offer(getProduct(3),  new Store(Store.Partner.AMAZON), new Price(100, 0, Currency.EUR)),
+                new Offer(getProduct(4),  new Store(Store.Partner.AMAZON), new Price(100, 0, Currency.EUR)),
+                new Offer(getProduct(5),  new Store(Store.Partner.AMAZON), new Price(100, 0, Currency.EUR)),
+                new Offer(getProduct(6),  new Store(Store.Partner.AMAZON), new Price(100, 0, Currency.EUR))
         );
     }
 

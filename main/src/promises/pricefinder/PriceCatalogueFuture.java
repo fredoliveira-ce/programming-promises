@@ -1,14 +1,13 @@
 package promises.pricefinder;
 
 import domain.Catalogue;
+import domain.Currency;
 import domain.ExchangeService;
 import domain.Price;
 import domain.PriceFinder;
 import domain.Product;
 import promises.utils.Utils;
 
-import java.util.Currency;
-import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -16,14 +15,13 @@ import java.util.concurrent.Future;
 
 public class PriceCatalogueFuture {
 
-    private static final Currency CURRENCY = Currency.getInstance("BRL");
     private final Catalogue catalogue = new Catalogue();
     private final PriceFinder priceFinder = new PriceFinder(catalogue);
     private final ExchangeService exchangeService = new ExchangeService();
     private final ExecutorService executorService = Executors.newFixedThreadPool(5);
 
     public static void main(final String[] args) throws ExecutionException, InterruptedException {
-        new PriceCatalogueFuture().findLocalDiscountedPrice(Currency.getInstance("EUR"), "Galaxy S21");
+        new PriceCatalogueFuture().findLocalDiscountedPrice(Currency.EUR, "Galaxy S21");
     }
 
     private void findLocalDiscountedPrice(final Currency localCurrency, final String productName) throws ExecutionException, InterruptedException {
@@ -34,7 +32,7 @@ public class PriceCatalogueFuture {
 
         Future<Price> priceFuture = executorService.submit(() -> priceFinder.findBestPrice(productFuture.get()));
 
-        Future<Double> exchangeFuture = executorService.submit(() -> exchangeService.lookupExchangeRate(CURRENCY, localCurrency));
+        Future<Double> exchangeFuture = executorService.submit(() -> exchangeService.lookupExchangeRate(localCurrency));
 
         double localPrice = exchange(priceFuture.get(), exchangeFuture.get());
 
